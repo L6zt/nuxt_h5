@@ -1,0 +1,5 @@
+@import "var.css";
+.normal-title {
+  font-size: var(--normal-font-size);
+  color: var(--title-color);
+}

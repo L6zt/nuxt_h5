@@ -1,0 +1,16 @@
+{
+  "apps": [{
+    "name": "shop::vue",
+    "script": "server.js",
+    "error_file": "log/err.log",
+    "out_file": "log/out.log",
+    "merge_logs": true,
+    "type": "out",
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "source_map_support": false,
+    "env": {
+      "PORT": 3000,
+      "NODE_ENV": "production"
+    }
+  }]
+}
