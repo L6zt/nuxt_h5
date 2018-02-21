@@ -38,7 +38,6 @@
   const height = 60
   const rem = height / viewW
   const initLocation = (state ,target) => {
-      console.log(target)
       const ay = state.split('-')
       let result = []
       if (!!!ay.length) {
@@ -155,6 +154,14 @@
           this.fn(this.mvLocation.map(item => {
             return Math.round(Math.abs(parseFloat(item)) / rem)
           }))
+          this.mvLocation = this.mvLocation.map((item, i) => {
+            if (i > index) {
+              return 0
+            }
+            else {
+              return item
+            }
+          })
         }
       },
       touchS (e) {
