@@ -156,7 +156,7 @@
       transitionend (e) {
         const elem = e.target
         const index = parseInt(elem.getAttribute('data-index'))
-        if (index === this.indx) {
+        if (index === this.indx && !this.tempMv) {
           this.indx = null
           this.mvLocation = this.mvLocation.map((item, i) => {
             if (i > index) {
