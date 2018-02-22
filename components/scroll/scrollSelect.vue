@@ -23,6 +23,7 @@
             <li v-for="(it, i) in item"
                 :key="i"
                 :data-index="index"
+                :class = "{'scale-big': i === isScaleBig(indx, index)}"
             >
               {{it}}
             </li>
@@ -65,7 +66,8 @@
       },
       show: {
         default: false
-      }
+      },
+      rem
     },
     data () {
       return {
@@ -98,8 +100,13 @@
       }
     },
     methods: {
+      isScaleBig (indx, index) {
+        const mv = this.tempMv && indx === index ? this.tempMv : this.mvLocation[index]
+        let rIndx = Math.round(Math.abs(mv) / rem)
+        return rIndx
+      },
       addEvent () {
-        this.$refs['scroll'].forEach((elem, index) => {
+        (this.$refs['scroll'] || []) .forEach((elem, index) => {
           on({
             el: elem,
             type: 'touchstart',
@@ -123,7 +130,7 @@
         })
       },
       rmEvent () {
-        this.$refs['scroll'].forEach((elem, index) => {
+        (this.$refs['scroll'] || []).forEach((elem, index) => {
           off({
             el: elem,
             type: 'touchstart',
@@ -151,9 +158,6 @@
         const index = parseInt(elem.getAttribute('data-index'))
         if (index === this.indx) {
           this.indx = null
-          this.fn(this.mvLocation.map(item => {
-            return Math.round(Math.abs(parseFloat(item)) / rem)
-          }))
           this.mvLocation = this.mvLocation.map((item, i) => {
             if (i > index) {
               return 0
@@ -162,6 +166,9 @@
               return item
             }
           })
+          this.fn(this.mvLocation.map(item => {
+            return Math.round(Math.abs(parseFloat(item)) / rem)
+          }))
         }
       },
       touchS (e) {
@@ -232,6 +239,7 @@
       height: 40px;
       line-height: 40px;
       text-align: center;
+      font-size: 28px;
       &.cancel {
          background: #dbe1ec;
          color: #fff;
@@ -250,6 +258,9 @@
     overflow: hidden;
     padding: 0 20px;
     box-sizing: border-box;
+    .scale-big {
+      font-size: 32px;
+    }
     &::after {
       position: absolute;
       display: block;

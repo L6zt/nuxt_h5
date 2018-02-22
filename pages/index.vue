@@ -8,13 +8,13 @@
         <!--</div>-->
       <!--</section>-->
     </div>
-    <p class="special-desc" @click="show = true">其实我们不一样</p>
+    <p class="special-desc" @click="show = true">自己日期插件</p>
     <scroll-select
       :list="list"
       :state="state"
       :fn="fn"
       :show.sync="show"
-      @end="change"
+      @end="end"
     >
     </scroll-select>
   </div>
@@ -31,13 +31,16 @@ export default {
     }).then(data => data)
   },
   data () {
+    const yearRange = []
+    for (let i = new Date().getFullYear(); i > 1920; i--) {
+      yearRange.push(i)
+    }
     return {
-      list: [
-        [1, 2, 3, 4, 5],
-        [1, 2, 3, 4, 5]
-      ],
-      state: '1-5',
-      show: false
+      list: [],
+      state: '',
+      show: false,
+      yearRange,
+      monthRange: '01-02-03-04-05-06-07-08-09-10-11-12'.split('-')
     }
   },
   head () {
@@ -50,29 +53,71 @@ export default {
   },
   components: {scrollSelect},
   methods: {
-    change (e) {
+    end (e) {
       const {flag, ay} = e
       const {list} = this
       if (flag) {
-        this.state = `${list[0][ay[0]]}-${list[1][ay[1]]}`
+        this.state = `${list[0][ay[0]]}-${list[1][ay[1]]}-${list[2][ay[2]]}`
+      } else {
+        this.initList()
       }
     },
     fn (ay) {
-      console.log('xxx', ay[0])
-      this.list.splice(1, 1, this.list[0].map((item, index) => {
-        return this.list[0][ay[0]] + index
-      }))
+      const [year, month] = ay
+      let aYear = []
+      let aMonth = []
+      let aDay = []
+      let allDay = null
+      aYear = this.yearRange
+      aMonth = this.monthRange
+      const IsLeapYear = (year) => {
+          console.log(year)
+          if (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0)
+            return 1
+           else
+            return 0
+    }
+      switch (aMonth[month]) {
+        case '01':
+        case '03':
+        case '05':
+        case '07':
+        case '08':
+        case '10':
+        case '12':
+          allDay = 31
+          break
+        case '04':
+        case '06':
+        case '09':
+        case '11':
+          allDay = 30
+          break
+        case '02':
+          allDay = 28 + IsLeapYear(parseInt(aYear[year]))
+          break;
+        default: {
+        }
+      }
+      for (let i = 1; i <= allDay; i++) {
+        aDay.push(i < 10 ? `0${i}`: i)
+      }
+      this.list = [aYear, aMonth, aDay]
+    },
+    initList () {
+      const list = this.state.split('-')
+      this.fn([
+        this.yearRange.findIndex(item => item.toString() === list[0].toString()),
+        this.monthRange.findIndex(item => item.toString() === list[1].toString()),
+        parseInt(list[2]) - 1
+      ])
     }
   },
   mounted () {
-    console.log(this.pp)
-    new Promise((r, j) => {
-      setTimeout(() => {
-        r(19)
-      })
-    }).then(data => {
-        console.log(data)
-    })
+    setTimeout(() => {
+      this.state = '1999-05-18'
+      this.initList()
+    }, 2000)
   }
 }
 </script>
