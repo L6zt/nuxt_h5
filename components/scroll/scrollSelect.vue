@@ -63,7 +63,9 @@
         type: String,
       },
       fn: {
-        type: Function
+        type: Function,
+        default: function () {
+        }
       },
       show: {
         default: false

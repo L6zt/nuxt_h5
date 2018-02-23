@@ -8,13 +8,21 @@
         <!--</div>-->
       <!--</section>-->
     </div>
-    <p class="special-desc" @click="show = true">自己日期插件</p>
+    <p class="special-desc" @click="show = true">我是年月日</p>
+    <p class="special-desc" @click="vYear.bShow = true">我是年</p>
     <scroll-select
       :list="list"
       :state="state"
       :fn="fn"
       :show.sync="show"
       @end="end"
+    >
+    </scroll-select>
+    <scroll-select
+      :list="vYear.year"
+      :state="vYear.state"
+      :show.sync="vYear.bShow"
+      @end="endb"
     >
     </scroll-select>
   </div>
@@ -40,7 +48,12 @@ export default {
       state: '',
       show: false,
       yearRange,
-      monthRange: '01-02-03-04-05-06-07-08-09-10-11-12'.split('-')
+      monthRange: '01-02-03-04-05-06-07-08-09-10-11-12'.split('-'),
+      vYear: {
+        bShow: false,
+        year: [[...yearRange]],
+        state: '1992'
+      }
     }
   },
   head () {
@@ -60,6 +73,12 @@ export default {
         this.state = `${list[0][ay[0]]}-${list[1][ay[1]]}-${list[2][ay[2]]}`
       } else {
         this.initList()
+      }
+    },
+    endb (e) {
+      const {flag, ay} = e
+      if (flag) {
+        this.vYear.state = `${this.vYear.year[0][ay[0]]}`
       }
     },
     fn (ay) {
