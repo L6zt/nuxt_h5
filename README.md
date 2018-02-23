@@ -9,7 +9,7 @@
 4. 增加 babel profill
 5. 解决  ie 9 h5 history.replcaeState 不支持
 ## 组件
-增加 移动端滚动原则组件
+增加 移动端滚动选择组件
 scrollSelect
 ## 初始化
 1. git clone this
