@@ -115,7 +115,7 @@ export default {
   },
   mounted () {
     setTimeout(() => {
-      this.state = '1999-05-18'
+      this.state = '1992-11-11'
       this.initList()
     }, 2000)
   }

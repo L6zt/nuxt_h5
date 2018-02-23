@@ -38,6 +38,7 @@
   const viewW = 75
   const height = 60
   const rem = height / viewW
+  console.log(viewW)
   const initLocation = (state ,target) => {
       const ay = state.split('-')
       let result = []
@@ -264,21 +265,14 @@
     &::after {
       position: absolute;
       display: block;
-      width: 96%;
-      content: '';
       border-top: 1px solid #ccc ; /*px*/
+      border-bottom: 1px solid #ccc; /*px*/
+      width: 96%;
+      height: 60px;
+      content: '';
       left: 2%;
       top: 60px;
      }
-     &::before {
-        position: absolute;
-        display: block;
-        width: 96%;
-        content: '';
-        border-bottom: 1px solid #ccc; /*px*/
-        left: 2%;
-        bottom: 60px;
-      }
     .jc-select-target-c {
       position: relative;
       width: 100%;
@@ -289,8 +283,10 @@
       top: 60px;
       flex: 1;
       text-align: center;
-      height: 60px;
-      line-height: 60px;
+      li {
+        height: 60px;
+        line-height: 60px;
+      }
     }
   }
 </style>
