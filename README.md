@@ -8,6 +8,9 @@
 3. 加入 postcss 插件 postcss-salad
 4. 增加 babel profill
 5. 解决  ie 9 h5 history.replcaeState 不支持
+## 组件
+增加 移动端滚动原则组件
+scrollSelect
 ## 初始化
 1. git clone this
 2. cd /
